@@ -121,6 +121,7 @@ blockquote {
 
 code, pre {
   font-family:Monaco, Bitstream Vera Sans Mono, Lucida Console, Terminal, Consolas, Liberation Mono, DejaVu Sans Mono, Courier New, monospace;
+ 	/*font-family: 微软雅黑,黑体,verdana, geneva, arial, helvetica, sans-serif;;*/
   color:#333;
   font-size:12px;
 }
