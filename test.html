@@ -1,109 +1,23 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
-<html xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html>
 <head>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8" />
-<title>选项卡</title>
-<style type="text/css">
-body{
-font-family: arial;
-font-size: 12px;
-text-align: center;
-margin: 0;
-}
-.nTab{
-float: left;
-width: 542px;
-margin: 0 auto;
-border-bottom:1px #C7C7CD solid;
-background:#d5d5d5;
-background-position:left;
-background-repeat:repeat-y;
-margin-bottom:2px;
-}
-.nTab .TabTitle{
-clear: both;
-height: 26px;
-overflow: hidden;
-}
-.nTab .TabTitle ul{
-margin:0;
-padding:0;
-}
-.nTab .TabTitle li{
-float: left;
-width: 60px;
-cursor: pointer;
-padding-top: 6px;
-padding-right: 0px;
-padding-left: 0px;
-padding-bottom: 7px;
-list-style-type: none;
-}
-.nTab .TabTitle .active{ background:url(http://www.codefans.net/jscss/demoimg/200905/tab_bg1.gif) left -25px no-repeat;border-left:1px  #C7C7CD solid;border-top:1px  #C7C7CD solid;border-bottom:1px #fff solid;}
-.nTab .TabTitle .normal{ background:url(/jscss/demoimg/200905/tab_bg1.gif);border-top:1px #C7C7CD solid;border-bottom:1px #C7C7CD solid;}
-.nTab .TabContent{
-width:auto;background:#fff;
-margin: 0px auto;
-padding:10px 0 0 0;
-border-right:1px #C7C7CD solid;border-left:1px #C7C7CD solid;
-}
-.none {display:none;}
-</style>
-<script type="text/javascript">
-function nTabs(thisObj,Num){
-if(thisObj.className == "active")return;
-var tabObj = thisObj.parentNode.id;
-var tabList = document.getElementById(tabObj).getElementsByTagName("li");
-for(i=0; i <tabList.length; i++)
-{
-  if (i == Num)
-  {
-   thisObj.className = "active"; 
-      document.getElementById(tabObj+"_Content"+i).style.display = "block";
-  }else{
-   tabList[i].className = "normal"; 
-   document.getElementById(tabObj+"_Content"+i).style.display = "none";
-  }
-} 
-}
-</script>
+<link href="http://cdn.bootcss.com/bootstrap/3.3.1/css/bootstrap.min.css" rel="stylesheet">
 </head>
-<body>
-<br />
-<br />
-<center>
-<div style="text-align:center; margin-left:200px;">
-<!-- 选项卡开始 -->
-  <div class="nTab">
-    <!-- 标题开始 -->
-    <div class="TabTitle">
-      <ul id="myTab0">
-        <li class="active" onclick="nTabs(this,0);">源码首页</li>
-        <li class="normal" onclick="nTabs(this,1);">最新更新</li>
-        <li class="normal" onclick="nTabs(this,2);">下载排行</li>
-        <li class="normal" onclick="nTabs(this,3);">源码分类</li>
-        <li class="normal" onclick="nTabs(this,4);">网页特效</li>
-        <li class="normal" onclick="nTabs(this,5);">ASP源码</li>
-<li class="normal" onclick="nTabs(this,6);">PHP源码</li>
-<li class="normal" onclick="nTabs(this,7);">JSP源码</li>
-<li class="normal" onclick="nTabs(this,8);">JAVA源码</li>
-      </ul>
-    </div>
-    <!-- 内容开始 -->
-    <div class="TabContent">
-	      <div id="myTab0_Content0"> 出自：<a href="/" target="_blank">源码爱好者</a></div>
-	      <div id="myTab0_Content1" class="none"><a href="/">最新更新</a></div>
-	      <div id="myTab0_Content2" class="none"><a href="/">下载排行</a></div>
-	      <div id="myTab0_Content3" class="none"><a href="/">源代码分类</a></div>
-	      <div id="myTab0_Content4" class="none"><a href="/">网页特效</a></div>
-	      <div id="myTab0_Content5" class="none"><a href="/">ASP类精品程序</a></div>
-		  <div id="myTab0_Content6" class="none"><a href="/">PHP精品程序</a></div>
-		  <div id="myTab0_Content7" class="none"><a href="/">JSP源码区</a></div>
-		  <div id="myTab0_Content8" class="none"><a href="/">JAVA源码</a></div>
-    </div>
-  </div>
-  <!-- 选项卡结束 -->
-  </div>
-  </center>
- </body>
+  <body style="padding:30px">
+    <textarea id="text-input" oninput="this.editor.update()"
+              rows="6" cols="60">Type **Markdown** here.</textarea>
+    <div id="preview"> </div>
+    <script src="markdown.js"></script>
+    <script>
+      function Editor(input, preview) {
+        this.update = function () {
+          preview.innerHTML = markdown.toHTML(input.value);
+        };
+        input.editor = this;
+        this.update();
+      }
+      var $ = function (id) { return document.getElementById(id); };
+      new Editor($("text-input"), $("preview"));
+    </script>
+  </body>
 </html>

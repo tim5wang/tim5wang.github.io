@@ -22,7 +22,7 @@
       		<script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.js"></script>
       		<script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     	<![endif]-->
-
+		<!--用于切换博客内容，通过层-->
 		<script type="text/javascript">
 			function nTabs(thisObj, Num) {
 				if(thisObj.className == "active") return;
@@ -39,7 +39,9 @@
 				}
 			}
 		</script>
-
+		<style type="text/css">
+			.none {display:none;}
+		</style>
 	</head>
 
 	<body>
@@ -133,107 +135,169 @@
 			</div>
 		</nav>
 
-		<!--博客左边栏-->
+		
 		<div class="container-fluid">
+<!--+===============================================================================+-->
+<!--+===============================================================================+-->
+<!--+===============================================================================+-->
+<!--+===============================================================================+-->
+			<!--博客左边栏-->
 			<div class="row">
 				<div class="col-sm-3 col-md-2 sidebar">
-					<ul class="nav nav-sidebar">
+					<ul class="nav nav-sidebar" id="myTab0">
 
-						<li class="active">
-							<a href="http://blog.csdn.net/qq_21577869/article/details/48375553" onclick="">如何用github搭建静态网站</a>
+						<li class="active" onclick="nTabs(this,0);">
+							<a href="#">如何用github搭建静态网站</a>
 						</li>
-						<li>
-							<a href="http://v3.bootcss.com/examples/dashboard/#">第二</a>
+						<li class="normal" onclick="nTabs(this,1);">
+							<a href="#">第二条博文</a>
 						</li>
-						<li>
-							<a href="http://v3.bootcss.com/examples/dashboard/#">Analytics</a>
-						</li>
-						<li>
-							<a href="http://v3.bootcss.com/examples/dashboard/#">Export</a>
-						</li>
-					</ul>
-					<ul class="nav nav-sidebar">
-						<li>
-							<a href="http://v3.bootcss.com/examples/dashboard/">Nav item</a>
-						</li>
-						<li>
-							<a href="http://v3.bootcss.com/examples/dashboard/">Nav item again</a>
-						</li>
-						<li>
-							<a href="http://v3.bootcss.com/examples/dashboard/">One more nav</a>
-						</li>
-						<li>
-							<a href="http://v3.bootcss.com/examples/dashboard/">Another nav item</a>
-						</li>
-						<li>
-							<a href="http://v3.bootcss.com/examples/dashboard/">More navigation</a>
-						</li>
-					</ul>
-					<ul class="nav nav-sidebar">
-						<li>
-							<a href="http://v3.bootcss.com/examples/dashboard/">Nav item again</a>
-						</li>
-						<li>
-							<a href="http://v3.bootcss.com/examples/dashboard/">One more nav</a>
-						</li>
-						<li>
-							<a href="http://v3.bootcss.com/examples/dashboard/">Another nav item</a>
+						<li class="normal" onclick="nTabs(this,2);">
+							<a href="#">第三条博文</a>
 						</li>
 					</ul>
 				</div>
+<!--+===============================================================================+-->
+<!--+===============================================================================+-->
+<!--+===============================================================================+-->
+<!--+===============================================================================+-->
+				<!--右边内容区,通过切换层来-->
+				<div class="TabContent">
+<!--=========================博客一 ===================================================-->
+					
+					<div id="myTab0_Content0">
+						<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+							<h1 class="page-header">准备材料</h1>
 
-				<!--右边内容区-->
-				<div id="myTab0_Content0">
-					<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id=>
-						<h1 class="page-header">准备材料</h1>
+							<div class="row placeholders">
+								<div class="col-xs-6 col-sm-3 placeholder">
 
-						<div class="row placeholders">
-							<div class="col-xs-6 col-sm-3 placeholder">
+									<object width="180" height="180" data="img/hamster.swf" align="center" />
+									<p align="center"><img src="img/ico200x.png" /></p>
+									<p style="color: red;">无flash插件或未启用(flash下有一只聪明的小鼠)</p>
+									</object>
+									<h4>耐心</h4>
 
-								<object width="180" height="180" data="img/hamster.swf" align="center" />
-								<p align="center"><img src="img/ico200x.png" /></p>
-								无flash插件或未启用
-								</object>
-								<h4>耐心</h4>
+									<span class="text-muted">耐心是学习新事物所必要的</span>
+								</div>
+								<div class="col-xs-6 col-sm-3 placeholder">
+									<img src="img/404200x.jpg" />
+									<h4>github免费账号</h4>
+									<span class="text-muted">git.oschina,coding.net的也行</span>
+								</div>
+								<div class="col-xs-6 col-sm-3 placeholder">
+									<img src="img/git180x.png" />
+									<h4>git软件</h4>
+									<span class="text-muted">基本的远程仓库管理方法</span>
+								</div>
+								<div class="col-xs-6 col-sm-3 placeholder">
+									<img src="img/Domain.jpg" width="170" height="170" />
+									<h4>注册个域名</h4>
+									<span class="text-muted">不注册也可以，注册学会域名管理</span>
+								</div>
 
-								<span class="text-muted">耐心是学习新事物必要的</span>
 							</div>
-							<div class="col-xs-6 col-sm-3 placeholder">
-								<img src="img/404200x.jpg" />
-								<h4>github免费账号</h4>
-								<span class="text-muted">git.oschina,coding.net的也行</span>
-							</div>
-							<div class="col-xs-6 col-sm-3 placeholder">
-								<img src="img/git180x.png" />
-								<h4>git软件</h4>
-								<span class="text-muted">基本的远程仓库管理方法</span>
-							</div>
-							<div class="col-xs-6 col-sm-3 placeholder">
-								<img src="img/Domain.jpg" width="170" height="170" />
-								<h4>注册个域名</h4>
-								<span class="text-muted">不注册也可以，注册学会域名管理</span>
-							</div>
+						</div>
 
+						<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+							<h1 class="page-header">第一步</h1>
+							<p>
+								学习Git的常用操作，如： git add --all;git commit -m "version1";git push origin master等　　 </p>
+							<p align="center">
+								<img src="img/git_push.png" />
+							</p>
+							
+							
+							<h1 class="page-header">第二步</h1>
+							<p></p>
+							<h1 class="page-header">第三步</h1>
+							<p></p>
+							<h1 class="page-header">第四步</h1>
+							<p></p>
 						</div>
 					</div>
-
-					<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-						<h1 class="page-header">第一步</h1>
-						<p>
-							因为某些原因，我接触过很多精神病人。辩证点儿的说法是“至少在大多数人看来是精神病的人”。 用词上我不想深究，这也不是必交的工作报告，就这么用吧。 　　 </p>
-						<p>
-							其实精神病人很好沟通，没想象的那么难。有相当数量的人逻辑上极为清晰——在他们自己的世界观里。 当然，狂躁症的除外，那个得冒点儿风险——被打一类的，做好心理和生理准备就没大问题。我说的生理准备是逃跑。 我又不是对方亲人，犯不着流着泪让对方揍，逃跑还是很必要的一项准备。
-
-						</p>
-						<h1 class="page-header">第二步</h1>
-						<p></p>
-						<h1 class="page-header">第三步</h1>
-						<p></p>
-						<h1 class="page-header">第四步</h1>
-						<p></p>
+				</div>
+<!--=====================================博客二 =====================================-->
+			<!--在这里写下一条博客，或者分布到别的文档，还待优化-->
+					<div id="myTab0_Content1" style="display: none;">
+						<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+							<h1 class="page-header">我为博客提供三种内容创建方式</h1>
+							<h3><p>第一种方法为直接在blog.html上编辑，如同第一条博客的方法</p>
+								<p>第二种方法是篇博客的方法，内容另外写到./blog/文件.html下然后引用，这里引入百度搜索作为示例</p>
+								<p>第三种是用MarkDown文本来书写博客内容</p>
+								<p>综合第二第三种方法，可以更方便书写博客</p>
+								<p>注意本网页在引用页面时采用在div中添加的frame方法</p>
+							</h3>
+							<h1 class="page-header"></h1>
+							 <iframe src="  http://www.baidu.com " width="800px" height="700px" scrolling="no" frameborder="no"> </iframe>
+							
+						</div>
+					</div>
+					
+<!--======================================博客三====================================-->
+					<div id="myTab0_Content2" style="display: none;" >
+						<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" >
+							<h1 class="page-header" >博客三</h1>	
+							<h2>用markdown语法书写博客内容，网页自动调用markdown.js编译</h>
+							<div style="display: none;">
+							<textarea  id="text-input"  rows="10000" cols="100">#内容在这里书写（见代码） ** [百度](http://www.baidu.com)**</textarea>
+							
+							</div>
+							
+							<div id="preview" onload="this.editor.update()"> 
+							<!--编译出的页面将在网页这里显示-->
+							<!--=======================================================-->
+							<!--=======================================================-->
+							<!--=======================================================-->
+							<!--=======================================================-->
+							<!--=======================================================-->
+							<!--=======================================================-->
+							<!--=======================================================-->
+							<!--=======================================================-->
+							</div>
+						</div>
+						<!--引入MarkDown编辑器，方便博客写作排版-->
+						<!--参考：   http://www.tuicool.com/articles/3uIjei6-->
+						<script src="js/markdown.js"></script>
+					    <script>
+					      function Editor(input, preview) {
+					        this.update = function () {
+					          preview.innerHTML = markdown.toHTML(input.value);
+					        };
+					        input.editor = this;
+					        this.update();
+					      }
+					      var $ = function (id) { return document.getElementById(id); };
+					      new Editor($("text-input"), $("preview"));
+					    </script>
+					    <script>
+					    	function myEditer(input,privew){
+					    		this.load = function(){
+					    			var inputtex = document.getElementById("p-input").innerHTML.alert;
+					    			
+					    		}
+					    	}
+					    </script>
+					</div>
+					
+				<!--底部版权-->	
+				<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+					 <h1 class="page-header"></h1>
+					<div class="footer-bottom-area">
+						<div class="container">
+							<div class="row">
+								<div class="col-md-8">
+									<div class="copyright">
+										<p>Copyright &copy;itgeek.space</p>
+									</div>
+								</div>
+								</div>
+							</div>
+						</div>
 					</div>
 				</div>
 			</div>
+			
 			<script src="js/jquery.min.js"></script>
 			<script src="js/bootstrap.min.js"></script>
 			<script src="js/docs.min.js"></script>
