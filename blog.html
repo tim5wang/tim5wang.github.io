@@ -22,6 +22,24 @@
       		<script src="http://cdn.bootcss.com/html5shiv/3.7.0/html5shiv.js"></script>
       		<script src="http://cdn.bootcss.com/respond.js/1.4.2/respond.min.js"></script>
     	<![endif]-->
+
+		<script type="text/javascript">
+			function nTabs(thisObj, Num) {
+				if(thisObj.className == "active") return;
+				var tabObj = thisObj.parentNode.id;
+				var tabList = document.getElementById(tabObj).getElementsByTagName("li");
+				for(i = 0; i < tabList.length; i++) {
+					if(i == Num) {
+						thisObj.className = "active";
+						document.getElementById(tabObj + "_Content" + i).style.display = "block";
+					} else {
+						tabList[i].className = "normal";
+						document.getElementById(tabObj + "_Content" + i).style.display = "none";
+					}
+				}
+			}
+		</script>
+
 	</head>
 
 	<body>
@@ -165,50 +183,47 @@
 				</div>
 
 				<!--右边内容区-->
-				<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-					<h1 class="page-header">准备材料</h1>
+				<div id="myTab0_Content0">
+					<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main" id=>
+						<h1 class="page-header">准备材料</h1>
 
-					<div class="row placeholders">
-						<div class="col-xs-6 col-sm-3 placeholder">
+						<div class="row placeholders">
+							<div class="col-xs-6 col-sm-3 placeholder">
 
-							<object width="180" height="180" data="img/hamster.swf" align="center" />
-							<p align="center"><img src="img/ico200x.png" /></p>
-							无flash插件或未启用
-							</object>
-							<h4>耐心</h4>
+								<object width="180" height="180" data="img/hamster.swf" align="center" />
+								<p align="center"><img src="img/ico200x.png" /></p>
+								无flash插件或未启用
+								</object>
+								<h4>耐心</h4>
 
-							<span class="text-muted">耐心是学习新事物必要的</span>
+								<span class="text-muted">耐心是学习新事物必要的</span>
+							</div>
+							<div class="col-xs-6 col-sm-3 placeholder">
+								<img src="img/404200x.jpg" />
+								<h4>github免费账号</h4>
+								<span class="text-muted">git.oschina,coding.net的也行</span>
+							</div>
+							<div class="col-xs-6 col-sm-3 placeholder">
+								<img src="img/git180x.png" />
+								<h4>git软件</h4>
+								<span class="text-muted">基本的远程仓库管理方法</span>
+							</div>
+							<div class="col-xs-6 col-sm-3 placeholder">
+								<img src="img/Domain.jpg" width="170" height="170" />
+								<h4>注册个域名</h4>
+								<span class="text-muted">不注册也可以，注册学会域名管理</span>
+							</div>
+
 						</div>
-						<div class="col-xs-6 col-sm-3 placeholder">
-							<img src="img/404200x.jpg" />
-							<h4>github免费账号</h4>
-							<span class="text-muted">git.oschina,coding.net的也行</span>
-						</div>
-						<div class="col-xs-6 col-sm-3 placeholder">
-							<img src="img/git180x.png" />
-							<h4>git软件</h4>
-							<span class="text-muted">基本的远程仓库管理方法</span>
-						</div>
-						<div class="col-xs-6 col-sm-3 placeholder">
-							<img src="img/Domain.jpg" width="170" height="170"/>
-							<h4>注册个域名</h4>
-							<span class="text-muted">不注册也可以，注册学会域名管理</span>
-						</div>
-						
 					</div>
-				</div>
-				
-				<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+
+					<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
 						<h1 class="page-header">第一步</h1>
 						<p>
-							因为某些原因，我接触过很多精神病人。辩证点儿的说法是“至少在大多数人看来是精神病的人”。
-							用词上我不想深究，这也不是必交的工作报告，就这么用吧。
-　　						</p>
+							因为某些原因，我接触过很多精神病人。辩证点儿的说法是“至少在大多数人看来是精神病的人”。 用词上我不想深究，这也不是必交的工作报告，就这么用吧。 　　 </p>
 						<p>
-						　　其实精神病人很好沟通，没想象的那么难。有相当数量的人逻辑上极为清晰——在他们自己的世界观里。
-						当然，狂躁症的除外，那个得冒点儿风险——被打一类的，做好心理和生理准备就没大问题。我说的生理准备是逃跑。
-						我又不是对方亲人，犯不着流着泪让对方揍，逃跑还是很必要的一项准备。
-							
+							其实精神病人很好沟通，没想象的那么难。有相当数量的人逻辑上极为清晰——在他们自己的世界观里。 当然，狂躁症的除外，那个得冒点儿风险——被打一类的，做好心理和生理准备就没大问题。我说的生理准备是逃跑。 我又不是对方亲人，犯不着流着泪让对方揍，逃跑还是很必要的一项准备。
+
 						</p>
 						<h1 class="page-header">第二步</h1>
 						<p></p>
@@ -216,9 +231,9 @@
 						<p></p>
 						<h1 class="page-header">第四步</h1>
 						<p></p>
-						</div>
+					</div>
+				</div>
 			</div>
-
 			<script src="js/jquery.min.js"></script>
 			<script src="js/bootstrap.min.js"></script>
 			<script src="js/docs.min.js"></script>
