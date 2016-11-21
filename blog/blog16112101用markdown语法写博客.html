@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html>
+
+<script type="text/javascript"
+  src="https://d3eoax9i5htok0.cloudfront.net/mathjax/latest/MathJax.js?config=TeX-AMS-MML_HTMLorMML">
+</script>
+<script type="text/x-mathjax-config">
+MathJax.Hub.Config({
+  tex2jax: {inlineMath: [['$','$'], ['\\(','\\)']]}
+});
+</script>
+<xmp theme="united" style="display:none;">
+# 在./blog/文件夹下写博客，在blog.html下引用
+## 用markdown语法写博客方便快捷
+## *[ 二号标题  斜体 链接](http://www.baidu.com/#ie=UTF-8&wd=itgeek.space)*
+
+## ** 加粗 **
+### 三级标题
+#### 四级标题
+##### 五级标题
+
+### 表格
+
+**Markdown　Extra**　表格语法：
+
+项目     | 价格
+-------- | ---
+Computer | $1600
+Phone    | $12
+Pipe     | $1
+
+可以使用冒号来定义对齐方式：
+
+| 项目      |    价格 | 数量  |
+| :-------- | --------:| :--: |
+| Computer  | 1600 元 |  5   |
+| Phone     |   12 元 |  12  |
+| Pipe      |    1 元 | 234  |
+
+###定义列表
+
+**Markdown　Extra**　定义列表语法：
+项目１
+项目２
+:   定义 A
+:   定义 B
+
+项目３
+:   定义 C
+
+:   定义 D
+
+	> 定义D内容
+
+代码块
+``` c
+# include "studio"
+main(){
+puts("hello word!!");
+}
+```
+
+使用MathJax渲染*LaTex* 数学公式，详见[math.stackexchange.com][1].
+[MathJax Chinese Doc 2.0 documentation »](http://mathjax-chinese-doc.readthedocs.io/en/latest/start.html)
+ - 行内公式，数学公式为：$\Gamma(n) = (n-1)!\quad\forall n\in\mathbb N$。
+ - 块级公式：
+
+$$	x = \dfrac{-b \pm \sqrt{b^2 - 4ac}}{2a} $$
+
+\[ \alpha + \alpha = 2\alpha \]
+</xmp>
+<script src="http://strapdownjs.com/v/0.2/strapdown.js"></script>
+<script src="//cdn.bootcss.com/mathjax/2.7.0/MathJax.js"></script>
+</html>

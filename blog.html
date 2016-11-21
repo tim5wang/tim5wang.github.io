@@ -42,6 +42,7 @@
 		<style type="text/css">
 			.none {display:none;}
 		</style>
+		<script src="//cdn.bootcss.com/markdown.js/0.6.0-beta1/markdown.min.js"></script>
 	</head>
 
 	<body>
@@ -155,6 +156,9 @@
 						<li class="normal" onclick="nTabs(this,2);">
 							<a href="#">第三条博文</a>
 						</li>
+						<li class="normal" onclick="nTabs(this,3);">
+							<a href="#">第四条博文</a>
+						</li>
 					</ul>
 				</div>
 <!--+===============================================================================+-->
@@ -221,16 +225,9 @@
 			<!--在这里写下一条博客，或者分布到别的文档，还待优化-->
 					<div id="myTab0_Content1" style="display: none;">
 						<div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-							<h1 class="page-header">我为博客提供三种内容创建方式</h1>
-							<h3><p>第一种方法为直接在blog.html上编辑，如同第一条博客的方法</p>
-								<p>第二种方法是篇博客的方法，内容另外写到./blog/文件.html下然后引用，这里引入百度搜索作为示例</p>
-								<p>第三种是用MarkDown文本来书写博客内容</p>
-								<p>综合第二第三种方法，可以更方便书写博客</p>
-								<p>注意本网页在引用页面时采用在div中添加的frame方法</p>
-							</h3>
-							<h1 class="page-header"></h1>
-							 <iframe src="  http://www.baidu.com " width="800px" height="700px" scrolling="no" frameborder="no"> </iframe>
-							
+							 <iframe  name="iframe1" src="blog/blog16112101用markdown语法写博客.html" 
+							 	width="100%" height="100%" scrolling="no" frameborder="0"
+							 	onload="this.height=iframe1.document.body.scrollHeight" > </iframe>
 						</div>
 					</div>
 					
@@ -278,6 +275,10 @@
 					    		}
 					    	}
 					    </script>
+					</div>
+					
+					<div id="myTab0_Content2" style="display: none;" >
+						
 					</div>
 					
 				<!--底部版权-->	
