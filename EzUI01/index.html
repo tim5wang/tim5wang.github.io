@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title></title>
+		<!--引入EasyUI核心UI文件css-->
+		<link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css" />
+		<!--引入easyui的图标-->
+		<link rel="stylesheet" type="text/css" href="easyui/themes/icon.css" />
+		<!--<script type="text/javascript" src="easyui/easyloader.js"></script>-->
+		<script type="text/javascript" src="easyui/jquery.min.js"></script>
+		<script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
+		<script>
+/*		验证*/
+			function selectuser(){
+				var user = $('#username').val();
+				var password1 = $('#password1').val();
+				var message = "输入的用户名或密码有误";
+				if (user.length==0 || password1.length==0)
+				{
+					message = "用户名和密码不能为空！！";
+				}
+				else if(user=="admin"&&user=="admin"){
+					message="管理员身份，登陆成功";
+				}
+				
+				$('#tx2').dialog({
+					title: '提示框',
+					width:300,
+					height:200,
+					iconCls:'icon-edit',
+				});
+				/*追加提示框内容*/
+				$('#tx2').append(message);
+			}
+		</script>
+	</head>
+	<body>
+		<div id= "tx" class="easyui-panel" title="登陆管理" style="width: 298px;height: 190px;"
+			data-options="iconCls:'icon-save',closable:true,closeAnimation:'slide',closeDuration:'1000'">
+			<div style="height: 50px;margin-top: 30px;" align="center">
+				<label>用户名</label>
+				<input id="username" type="text" class="easyui-textbox" data-options="iconCls:'icon-man'"/>
+			</div>
+			<div style="height: 50px;" align="center" style="margin-right: 30px;">
+				<label>密&nbsp;码</label>
+				<input id="password1" type="password" class="easyui-textbox" data-options="iconCls:'icon-lock'"/>
+			</div>
+			<div align="right" style="padding-right: 30px;">
+				<button class="easyui-linkbutton" data-options="iconCls:'icon-ok'" onclick="selectuser();" >登陆</button>
+				<button class="easyui-linkbutton" data-options="iconCls:'icon-add'">注册</button>
+			</div>
+		</div>
+		<div id="tx2"></div>
+	</body>
+</html>

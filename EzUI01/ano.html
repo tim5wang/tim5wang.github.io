@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<link rel="stylesheet" href="easyui/themes/default/easyui.css" />
+		<link rel="stylesheet"  href="easyui/themes/icon.css" />
+		<script type="text/javascript" src="easyui/jquery.min.js"></script>
+		<script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
+	</head>
+	<body>
+		<!--用容器盛放下拉框即可-->
+		<h1>貌似是个标签都能变成下拉框</h1>
+		<div class="easyui-combobox" style="width: 300px;">
+			<li> a1 </li>
+			<li> a2 </li>
+			<li> a3 </li>
+			<li> a4 </li>
+			<li> a4 </li>
+			<li> a4 </li>
+			<li> a4 </li>
+			<li> a4 </li>
+			<li> a4 </li>
+			<li> a4 </li>
+			<li> a4 </li>
+			<li> a4 </li>
+			<li> a4 </li>
+			<li> a4 </li>
+		</div><br />
+		<a class="easyui-combobox"></a>
+		<br />
+		<p class="easyui-combobox"></p>
+		<br />
+		<h1 class="easyui-combobox"></h1>
+		<br />
+		<span class="easyui-combobox"></span>
+		<br />
+		<xml class="easyui-combobox"></xml>
+		<br />
+		<br class="easyui-combobox" />
+		<br />
+		<input class="easyui-combobox" />
+		<br />
+		<ul class="easyui-combobox" style="width: 300px;">
+			<li>select1</li>
+			<li>select2</li>
+			<li>select3</li>
+			<li>select4</li>
+			<li>select4</li>
+			<li>select4</li>
+			<li>select4</li>
+			<li>select4</li>
+			<li>select4</li>
+			<li>select4</li>
+			<li>select4</li>
+			<li>select4</li>
+			<li>select4</li>
+			<li>select4</li>
+			<li>select4</li>
+			<li>select4</li>
+		</ul>
+		<div>
+			<br /><br />
+			<h1>介个才是正确姿势</h1>
+		</div>
+		<!--静态下拉框及默认值的正确方法-->
+		<select class="easyui-combobox" style="width:300px;">
+			<option>option1</option>
+			<option selected="true">option2</option>
+			<option>option3</option>
+			<option>option4</option>
+			<option>option4</option>
+			<option>option4</option>
+			<option>option4</option>
+			<option>option4</option>
+			<option>option4</option>
+			<option>option4</option>
+			<option>option4</option>
+			<option>option4</option>
+			<option>option4</option>
+			<option>option4</option>
+			<option>option4</option>
+		</select>
+		
+		<div>
+			<br /><br />
+			<h1>设置动态下拉框值</h1>
+		</div>
+		<div>
+			<input class="easyui-combobox" data-options="
+				valueField:'label',
+				textField:'value',
+				data[
+					{label:'java',value:'java1'},
+					{label:'python',value:'python1'},
+					{label:'R',value:'R1'},
+					{label:'Ruby',value:'Ruby1'}
+				]" />
+		</div>
+		<br /><br />
+		<input id="cc" class="easyui-combobox" name="dept"   
+    		data-options="valueField:'id',textField:'text',url:'get_data.php'" /> 
+    		
+    	
+	</body>
+</html>
