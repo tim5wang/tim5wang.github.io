@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<!--
+	作者：tim5wang@qq.com
+	时间：2016-12-08
+	描述：完善用户个人信息，引用一个预览图片脚本js/uploadPreview.min.js，同登录注册界面一致，在面板上提示错误输入
+	TODO:
+	日期获取和验证还有问题
+-->
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>登录</title>
+		<link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css">   
+		<link rel="stylesheet" type="text/css" href="easyui/themes/icon.css">   
+		<script type="text/javascript" src="easyui/jquery.min.js"></script>   
+		<script type="text/javascript" src="easyui/jquery.easyui.min.js"></script> 
+		<script type="text/javascript" src="js/uploadPreview.min.js"></script>
+		
+	</head>
+	<body>
+		<div>
+			<script>
+				$("body").ready(function(){
+					$("#mesa").hide();
+				});
+				window.onload = function () { 
+		            new uploadPreview({ UpBtn: "up_img", DivShow: "imgdiv", ImgShow: "imgShow" });
+		        }
+				
+				function selectuser(){
+					var message = "";
+					if($("#username").val().length<6||$("#username").val().length>20){
+						message="用户名长度6-20个字符";
+//						$("#username").val("");alert();
+					}else if($("#realname").val().length<2){
+						message="真实姓名输入有误";
+					}else if($("#age").val()<12||$("#age").val()>125){
+						message="年龄输入有误";
+					}else if($("#sex").val().length<1){
+						message="未选择性别";
+					}else if($("#born").val().length<8){
+						alert($("#born").getYear());
+						message="出生时间输入有误";
+					}else if($("#shoolin").val().length<8){
+						message="请选择入学时间";
+					}else if($("#maschool").val().length<2){
+						message="请输入正确的毕业学校";
+					}else if($("#dept").val().length<2){
+						message="请输入专业";
+					}else if($("#password1").val()!="admin"){
+						message="您的密码输入错误";
+					}else if(!(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/.test($("#email").val()))){
+						message = "您输入的邮箱格式有误";
+					}else{
+						return;
+					}
+					$("#mesa").show().text(message);
+				}
+			</script>
+			<div id= "tx" class="easyui-window" title="注册信息" style="width: 650px;height:420px;float: left;"
+				data-options="iconCls:'icon-save',closable:true,draggable:true,minimizable:false">
+				<form>
+					<table align="center">
+						<tr>
+							<td>
+								<table>
+									<tr>
+										<td>
+											设置用户名称:
+										</td>
+										<td>
+											<input id="username" type="text" class="easyui-textbox" data-options="required:true" value="" oninput="this.inputname()"/>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											真实姓名：
+										</td>
+										<td>
+											<input id="realname" type="text" class="easyui-textbox" data-options="required:true"/>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											年龄：
+										</td>
+										<td>
+											<input id="age" type="number" class="easyui-numberbox" data-options="required:true,max:125,min:0"/>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											性别：
+										</td>
+										<td>
+											<input id="sex" class="easyui-combobox"  data-options="
+												panelHeight:45,
+												valueField: 'label',
+												textField: 'value',
+												data: [{label: 'man',value: '男'},
+												{label: 'woman',value: '女'}],
+												value: '男',selected:'man',
+												required:true"/>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											出生年月日:
+										</td>
+										<td>
+											<input id="born" type="text" class="easyui-datebox" data-options="required:true"/>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											入学时间:
+										</td>
+										<td>
+											<input id="shoolin" type="text" class="easyui-datebox textbox" data-options="required:true"/>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											毕业学校:
+										</td>
+										<td>
+											<input id="maschool" type="text" class="easyui-textbox" data-options="required:true"/>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											专业：
+										</td>
+										<td>
+											<input id="dept" type="text" class="easyui-textbox" data-options="required:true"/>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											验证密码:
+										</td>
+										<td>
+											<input id="password1" type="password" class="easyui-textbox" data-options="iconCls:'icon-lock',required:true"/>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											邮箱：
+										</td>
+										<td>
+											<input id="enail" type="email" class="easyui-textbox" data-options="required:true"/>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											
+										</td>
+									</tr>
+								</table>
+							</td>
+							<td align="center">
+								<div align="center" style="float: left; padding-left: 15%;">
+									<div><p>备注信息：</p></div>
+									<div align="center">
+										<textarea style="height: 50px;"> </textarea>
+									</div>
+									<div><p>添加头像预览</p></div>
+									<!--<input type="file" id="imagefile" />-->
+									<!--<button onclick="$('#im1').attr('src',$('#imagefile').val());">预览</button>-->
+									<div id="imgdiv"><img id="imgShow" width="100" height="100" /></div>
+									<input type="file" id="up_img"  />	
+									<!--<img height="100px" width="100px" id="im1" src="img/404.jpg" alt="浏览器安全机制，无插件暂不支持预览本地图片"/>-->
+								</div>
+							</td>
+						</tr>
+						<tr height="50px">
+							<td colspan="2">
+								<div align="center" style="clear: both;">
+									<a class="easyui-linkbutton" data-options="iconCls:'icon-ok'" onclick="selectuser();" >保存</a>
+									<button class="easyui-linkbutton" data-options="iconCls:'icon-add'" type="clear" onclick="$('form').form('clear');">清空</button></>
+								</div>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" align="center">
+								<p id="mesa" style="color: red;">警告信息</p>
+							</td>
+						</tr>
+					</table>
+				</form>
+			</div>
+		</div>
+	</body>
+</html>

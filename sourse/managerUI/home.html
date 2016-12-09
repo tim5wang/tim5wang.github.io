@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<!--
+	作者：tim5wang@qq.com
+	时间：2016-12-09
+	描述：根据子页面长度调整iframe高度：onload="this.height=a11.document.body.scrollHeight"
+-->
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>首页</title>
+		<link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css">   
+		<link rel="stylesheet" type="text/css" href="easyui/themes/icon.css">   
+		<script type="text/javascript" src="easyui/jquery.min.js"></script>   
+		<script type="text/javascript" src="easyui/jquery.easyui.min.js"></script> 
+	</head>
+	</head>
+	<body>
+		<table style="width: 100%;height: 100%;"  border="8">
+			<tbody>
+				<tr >
+					<td style="width: 50%;">
+						<iframe name="a11" src="user_manager.html" style="overflow: visible;" scrolling="yes" frameborder="yes" width="100%" 
+							onload="this.height=a11.document.body.scrollHeight"></iframe>
+					</td>
+					
+					<td style="width: 50%;">
+						<iframe name="a12" src="" style="overflow: visible;" scrolling="yes" frameborder="yes" width="100%" 
+							onload="this.height=a12.document.body.scrollHeight"></iframe>
+					</td>
+				</tr>
+				<tr >
+					<td>
+						<iframe name="a21" src="" style="overflow: visible;" scrolling="yes" frameborder="yes" width="100%" 
+							onload="this.height=a21.document.body.scrollHeight"></iframe>
+					</td>
+					<td>
+						<iframe name="a22" src="test.html" style="overflow: visible;" scrolling="yes" frameborder="yes" width="100%" 
+							onload="this.height=a22.document.body.scrollHeight"></iframe>
+					</td>
+				</tr>
+			</tbody>
+			
+		</table>
+</html>

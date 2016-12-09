@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<!--
+	作者：tim5wang@qq.com
+	时间：2016-12-08
+	描述：登录错误信息会在登录面板上显示，admin登录成功后有一个状态条
+	TODO:
+-->
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>登录</title>
+		<link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css" />
+		<link rel="stylesheet" type="text/css" href="easyui/themes/icon.css" />
+		<!--<script type="text/javascript" src="easyui/easyloader.js"></script>-->
+		<script type="text/javascript" src="easyui/jquery.min.js"></script>
+		<script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
+		<script>
+			$("body").ready(function(){
+				$("#table2").hide();
+				$("#mesa").hide();
+			});
+			function setVar(){
+				var value = $('#p1').progressbar('getValue'); 
+				if (value < 100){ 
+				value += Math.floor(Math.random() * 10); 
+				$('#p1').progressbar('setValue', value); 
+				setTimeout("setVar()","100");
+				}else{
+					setTimeout("window.location.href=\"main.html\";","300");
+				}
+			}
+			function selectuser(){
+				var user = $('#username').val();
+				var password1 = $('#password1').val();
+				var message = "输入的用户名或密码有误";
+//				var users = $.getJSON("data/users.json",function(data){
+//					//解析JSON
+//					$.each(data.result,function(i,item){
+//						var list = new Array();
+//						list.push(item.name);
+//					})
+//				},'json');
+//				
+//				var users = $.getJSON("data/users.json");
+//				alert(users.list[0].username);
+				if (user.length==0 || password1.length==0)
+				{
+					message = "用户名和密码不能为空！！";
+				}
+				else if(user=='admin'&&password1=="admin"){
+					message="";
+					$("#table1").hide();
+					$("#table2").show(500);
+					$('#p1').progressbar({ 
+						value: 6
+					}); 
+					setVar();		
+				}
+				$("#mesa").show().text(message);
+			}
+		</script>
+	</head>
+	<body>
+		<div id= "tx"  class="easyui-window" title="登录" style="width: 420px;height:370px;"
+			data-options="iconCls:'icon-save',closable:true,draggable:true,minimizable:false">
+			<div>
+				<table align="center" id="table1">
+					<tbody>
+						<tr height="140px" align="center">
+							<td colspan="2">
+								<img src="img/404.jpg" height="140px" width="140px"/>
+							</td>
+						</tr>
+						<tr height="50px">
+							<td>用户名</td>
+							<td>
+								<input id="username" class="easyui-textbox" data-options="iconCls:'icon-man'" />
+							</td>
+						</tr>
+						<tr height="50px">
+							<td>密码</td>
+							<td>
+								<input id="password1" class="easyui-textbox" type="password" data-options="iconCls:'icon-lock'" />
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" align="center">
+								<button  class="easyui-linkbutton" data-options="iconCls:'icon-ok'" onclick="selectuser();">登录</button>
+								<a class="easyui-linkbutton" data-options="iconCls:'icon-add'" onclick="window.location.href='SignIn.html'">注册</a>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" align="center">
+								<p id="mesa" style="color: red;">警告信息</p>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+				<table id="table2" align="center">
+					<tbody>
+						<tr height="200px">
+							<td align="center">
+								<p align="center"><h3 id="meh3">登陆成功！信息管理系统加载中</h3></p>
+							</td>
+						</tr>
+						<tr height="100px">
+							<td>
+								<div style="width: 300px;" id="p1"></div>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</body>
+</html>

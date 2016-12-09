@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<!--
+	作者：tim5wang@qq.com
+	时间：2016-12-08
+	描述：
+	TODO:
+-->
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>注册</title>
+		<link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css" />
+		<link rel="stylesheet" type="text/css" href="easyui/themes/icon.css" />
+		<!--<script type="text/javascript" src="easyui/easyloader.js"></script>-->
+		<script type="text/javascript" src="easyui/jquery.min.js"></script>
+		<script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
+	</head>
+	<body class="easyui-layout">
+		<div data-options="region:'north',split:false" style="height:50px;">
+			<div class="col-lg-10" style="float: inherit;">
+				<div style="float: left;">
+					<div>
+						<h4>&nbsp;&nbsp;&nbsp;<b>Admin,欢迎使用后台管理系统</b></h4>
+					</div>
+				</div>
+				<div style="float: right;">
+					<div>
+						<b>
+						<a class="easyui-linkbutton" href="preinfo.html" target="_blank">完善个人信息 </a>
+						<a onclick="close();document.write('<n>');alert('已退出');window.location='index.html';" class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">退出系统 </a>
+						</b>
+					</div>
+				</div>
+			</div>
+		</div>   
+	    <div data-options="region:'south',title:'输出信息',split:false" style="height:100px;">
+	    	<p align="center">
+	    		编写者：王太武<br />邮箱：tim5wang@qq.com<br />备案号：CNAME:itgeek.space
+	    	</p>
+	    </div>   
+	    <div data-options="region:'west',title:'菜单',split:false" style="width:20%;">
+	    	<div class="easyui-accordion"style="height: 99%;width: 99%;">
+				<div title="系统基础管理" style="height: 50px;width:100% ;layout-flow: horizontal;overflow: hidden;">
+					<div><a href="user_manager.html" target="menF">用户管理</a></div>
+					<div><a>角色信息</a></div>
+				</div>
+				<div title="用户信息管理">
+					<div><a>学生信息</a></div>
+					<div><a>角色信息</a></div>
+				</div>
+				<div title="新闻信息管理">
+					<div><a>学生信息</a></div>
+					<div><a>出勤信息</a></div>
+				</div>
+				<div title="考勤信息">
+					<div><a>学生信息</a></div>
+					<div><a>出勤信息</a></div>
+				</div>
+				<div title="考勤信息">
+					<div><a>学生信息</a></div>
+					<div><a>出勤信息</a></div>
+				</div>
+			</div>
+	    </div>   
+	    <div data-options="region:'center',title:'主面板'" style="">
+	    	<iframe name="menF" id="menForm" style="overflow: visible;width: 99%;height: 98%;" src="home.html"></iframe>
+	    	
+	    </div>   
+	</body>
+</html>

@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<!--
+	作者：tim5wang@qq.com
+	时间：2016-12-08
+	描述：
+	TODO ：
+	邮箱自动补全未实现，需要写较多脚本，引用网上代码未调试成功
+	邮箱框因为增加了easyui-combobox样式选择器，导致不能按$().val()的 方法获取输入值
+		
+-->
+<html>
+	<head>
+		<meta charset="UTF-8"/>
+		<title>注册</title>
+		<link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css" />
+		<link rel="stylesheet" type="text/css" href="easyui/themes/icon.css" />
+		<!--<script type="text/javascript" src="easyui/easyloader.js"></script>-->
+		<script type="text/javascript" src="easyui/jquery.min.js"></script>
+		<script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="js/email_comple.js"></script>
+		<script>
+//			$(document).ready(function(){
+//				addEmailHelp('emai');
+//			});
+			$("body").ready(function(){
+				addEmailHelp('emai');
+				$("#mesa").hide();
+			});
+		</script>
+	</head>
+	<body>
+		<div id= "tx"  class="easyui-window" title="用户注册" style="width: 420px;height:370px;"
+			data-options="iconCls:'icon-save',closable:true,draggable:true,minimizable:false">
+			<div>
+				<table align="center"  valign="middle">
+					<tbody>
+						<tr height="45px">
+							<td>用户名：</td>
+							<td>
+								<input class="easyui-textbox" data-options="required:true" id="username"/>
+							</td>
+						</tr>
+						<tr height="45px">
+							<td>邮箱：</td>
+							<td>
+								<input class="easyui-textbox easyui-combobox" data-options="required:true" type="email" id="emai"/>
+							</td>
+						</tr>
+						<tr height="45px">
+							<td>设置密码：</td>
+							<td>
+								<input class="easyui-textbox" type="password" data-options="required:true" id="password1"/>
+							</td>
+						</tr>
+						<tr height="45px">
+							<td>确认密码：</td>
+							<td>
+								<input class="easyui-textbox" type="password" data-options="required:true" id="password2"/>
+							</td>
+						</tr>
+						<tr height="45px" >
+							<td>验证码：</td>
+							<td>
+								<input type="text" class="easyui-textbox" style="width: 70px;" id="yanin"/>
+								<img height="35px" width="65px" src="img/yan1.png" id="yan"/>
+								<span id="yan1">看不清？</span>
+							</td>
+						</tr>
+						<tr height="45px">
+							<td colspan="2" align="center">
+								<button  class="easyui-linkbutton" data-options="iconCls:'icon-ok'" id="submi">提交</button>
+								<a class="easyui-linkbutton" data-options="iconCls:'icon-no'" href="index.html">取消</a>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" align="center">
+								<p id="mesa" style="color: red;">警告信息</p>
+							</td>
+						</tr>
+						<script>
+//							alert($("#emai").val());
+							$("#yan1").click(function(){
+								$("#yan").attr('src',"img/yan2.png");});
+							$("#yan").click(function(){
+								$(this).attr('src',"img/yan1.png");});
+							$("#submi").click(function(){
+								var warning="警告信息";
+								if($("#username").val().length<6)
+									warning="用户名不合法！";
+								else if(!(/^\w+((-\w+)|(\.\w+))*\@[A-Za-z0-9]+((\.|-)[A-Za-z0-9]+)*\.[A-Za-z0-9]+$/.test($("#emai").val())))
+									warning = "您输入的邮箱格式有误";
+								else if($("#password1").val().length<6)
+									warning="您设置的密码过短";
+								else if($("#password2").val()!=$("#password1").val())
+									warning="您两次输入的密码不一致";
+								else if(1==2)
+									warning="验证码输入有误";
+									//检验验证码
+								else{
+									window.location.href="main.html";
+								}
+								$("#mesa").text(warning);
+								$("#mesa").show();
+							});
+						</script>
+					</tbody>
+				</table>
+			</div>
+		</div>
+	</body>
+</html>

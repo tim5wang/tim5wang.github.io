@@ -1,0 +1,87 @@
+<!DOCTYPE html> 
+<!--TODO:
+	此文件学习和测试用
+		
+-->
+<html> 
+	<head> 
+		<meta charset="UTF-8">
+		<title>注册</title>
+		<link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css" />
+		<link rel="stylesheet" type="text/css" href="easyui/themes/icon.css" />
+		<script type="text/javascript" src="easyui/easyloader.js"></script>
+		<script type="text/javascript" src="easyui/jquery.min.js"></script>
+		<script type="text/javascript" src="easyui/jquery.easyui.min.js"></script>
+		<script type="text/javascript" src="js/email_comple.js"></script>
+		<script type="text/javascript" src="js/uploadPreview.min.js"></script>
+		
+	<script>
+//			$("body").ready(function(){
+//				$("#epanel").hide();
+//				$("#epanel").css("display:none");不可用
+//				$("#epanel").css("visibility","hidden");
+//			});
+			
+				$(document).ready(function(){
+//				$("#epanel").hide();
+//				$("#epanel").css("display:none");不可用
+				$("#epanel").css("visibility","hidden");
+			});
+		</script>
+	</head>
+	</head>
+	<body>
+		<h1 align="center">测试区</h1>
+		<button onclick="$('#epanel').show()">显示</button>
+		<button onclick="$('#epanel').css('display','block')">显示2</button>
+		<button onclick="$('#epanel').css('visibility','visible')">显示3</button>
+		<button onclick="$('#epanel').css('visibility','visible').dialog()">弹窗</button>
+	<div title="编辑单个信息" id="epanel" style="width: 300px;height: 240px;" 
+			<div align="center" style="margin-top: 30px;">
+				<form id="userForm">
+					<table >
+						<tr>
+							<td>
+								用户名：
+							</td>
+							<td>
+								<input id="username" type="text" class="easyui-textbox"/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								年龄：
+							</td>
+							<td>
+								<input id="age" type="number" class="easyui-numberbox"/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								入学时间：
+							</td>
+							<td>
+								<input id="schoolin" type="text" class="easyui-datebox textbox" />
+							</td>
+						</tr>
+						<tr>
+							<td>
+								邮箱：
+							</td>
+							<td>
+								<input id="email" type="email" class="easyui-textbox"/>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" align="center">
+								<div >
+									<a class="easyui-linkbutton" onclick="alert('未保存')" data-options="iconCls:'icon-ok'">保存</a>&nbsp;&nbsp;
+									<a class="easyui-linkbutton" onclick="alert('已经取消')" data-options="iconCls:'icon-cancel'">取消</a>
+								</div>
+							</td>
+						</tr>
+					</table>
+				</form>
+			</div>
+		</div>
+</html>

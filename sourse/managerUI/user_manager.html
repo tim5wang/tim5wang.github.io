@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<!--
+	作者：tim5wang@qq.com
+	时间：2016-12-09
+	描述：在一个页面上融合单个编辑和批量编辑，批量编辑时把选中的行转化为JSON生成可编辑表（实现过程出了问题，不会重新加载table连接的内容）
+	TODO:当 class="easyui-combobox" 时combobox的onchange事件不能被触发，尚未解决,不用时可以触发
+		 
+-->
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>系统用户管理</title>
+		<link rel="stylesheet" type="text/css" href="easyui/themes/default/easyui.css">   
+		<link rel="stylesheet" type="text/css" href="easyui/themes/icon.css">   
+		<script type="text/javascript" src="easyui/jquery.min.js"></script>   
+		<script type="text/javascript" src="easyui/jquery.easyui.min.js"></script> 
+		<script type="text/javascript">
+			
+			$(document).ready(function(){
+				$("#epanel").hide();
+				$("#espanel").hide();
+			});
+//			$("body").onload(function(){
+//				$("#epanel").hide();
+//				$("#espanel").hide();
+//			});
+//			$("body").ready(function(){
+//				$("#epanel").css("display","none");
+////				$("#epanel").hide();
+////				$("#espanel").hide();
+////				$("#ta1").hide();
+//			});
+			var data=[
+			{"username":"tim","age":25,"schoolin":"2014-9-10","email":"123@123.cn"},
+			{"username":"tim1","age":26,"schoolin":"2014-9-10","email":"123@123.cn"},
+			{"username":"tim2","age":27,"schoolin":"2014-9-10","email":"123@123.cn"},
+			{"username":"tim3","age":28,"schoolin":"2014-9-10","email":"123@123.cn"},
+			{"username":"tim4","age":29,"schoolin":"2014-9-10","email":"123@123.cn"},
+			{"username":"tom5","age":212,"schoolin":"2014-9-10","email":"123@123.cn"},
+			{"username":"zsd","age":31,"schoolin":"2014-9-10","email":"123@123.cn"},
+			{"username":"tiny","age":45,"schoolin":"2014-9-10","email":"123@123.cn"},
+			{"username":"mini","age":25,"schoolin":"2014-9-10","email":"123@123.cn"},
+			{"username":"mrcro","age":15,"schoolin":"2014-9-10","email":"123@123.cn"},
+			{"username":"unity","age":65,"schoolin":"2014-9-10","email":"123@123.cn"}
+			];
+			
+			//保存表格多行选择得到的数据的JSON格式
+			var ss;
+			
+			function getSelected(){
+				var row = $('#ta1').datagrid('getSelected');
+				if(row){
+					$.messager.alert('信息:',row.username+","+row.age+","+row.schoolin+","+row.email);
+				}
+			}
+			
+			function getSelections(){
+				var sj="[";
+				var rows = $('#ta1').datagrid('getSelections');
+				for (var i=0;i<rows.length;i++) {
+					var row = rows[i];
+					sj+="{"+ "\"username\":\""+ row.username+"\",\"age\":"+row.age+",\"schoolin\":\"" 
+					+row.schoolin+"\",\"email\":\""+ row.email +"\"}";
+					if(i<rows.length-1)
+						sj +=",";
+				}
+				sj+="]";
+				alert(sj);
+				alert(data);
+				ss = eval('(' + sj + ')');//把json字符串转化为json对象
+				alert(ss);
+			}
+			
+			function del(){
+//				var rows = $("#ta1").datagrid("getSelected");
+				alert(rows.email);
+				
+			}
+			function update() {
+			//查看当前批量下拉框状态,选择编辑模式
+				if($('#cb').val()==0){
+					$('#epanel').dialog({
+						title:'编辑单个信息',
+						iconCls:'icon-edit',
+					});
+					var row = $('#ta1').datagrid("getSelected");
+					$('#username').textbox('setValue', row.username);
+					$('#age').textbox('setValue', row.age);
+					$('#schoolin').textbox('setValue', row.schoolin);
+					$('#email').textbox('setValue', row.email);
+					$("#epanel").show();
+				}else{
+					alert("进入批量编辑模式");
+					getSelections();
+					$("#espanel").show();
+					$("#espanel").dialog({
+						title:'批量编辑信息',
+						iconCls:'icon-edit'
+					});
+					//让表格加载选中的信息
+					$("#ta2").data(ss);
+				}
+			}
+			
+			//获取并设置每行的索引
+			var editIndex = undefined;//设置获取行的变量
+			//编辑中的方法
+			function endEditing(){
+				//如果没有选择，则返回不进行编辑
+				if (editIndex==undefined) {
+					return true;
+				} else{
+					//结束当前行的编辑
+					$('#ta2').datagrid('endEdit',editIndex);
+					editIndex = undefined;
+					return false;
+				}
+			}
+			
+			
+				function onClickRow(index){
+					//判断当前的行是否为编辑行
+					if (editIndex != index) {
+						if (endEditing()) {
+							$('#ta2').datagrid('selectRow',index).datagrid('beginEdit',index);
+							editIndex = index;
+						} else{
+							//获取当前选中的行数据
+							$('#ta2').datagrid('selectRow',editIndex);
+						}
+					}
+					//启动编辑的行数据
+		//			$('#ta2').datagrid('selectRow',index).datagrid('beginEdit',index);
+				}
+			
+		</script>
+	</head>
+	<body>
+		<div class="easyui-panel" title="用户管理" id="main_panel" >
+			<table id="ta1" class="easyui-datagrid" 
+				data-options="data:data,singleSelect:true,toolbar:'#tb'">
+				<thead>
+					<tr>
+						<th field="id" checkbox="true"></th>
+						<th data-options="field:'username'" >用户名</th>
+						<th data-options="field:'age'">年龄</th>
+						<th data-options="field:'schoolin'">入学时间</th>
+						<th data-options="field:'email'">邮箱</th>
+					</tr>
+				</thead>
+			</table>
+		</div>
+		<div id="tb" class="easyui-panel">
+			<a  class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true"  onclick="getSelected()">添加</a>
+			<a  class="easyui-linkbutton" data-options="iconCls:'icon-cut',plain:true" onclick="javascript:alert('确定删除？');del()">删除</a>
+			<a  class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true" onclick="update()">编辑</a>
+			<select id="cb"  data-options="panelHeight:45" onchange="$('#ta1').datagrid({singleSelect:(this.value==0)})">
+				<option value="0" >单选适合编辑</option>
+				<option value="1" >多选适合批量操作</option>
+			</select>
+		</div>
+		
+		
+		
+		<div style="visibility: hidden;">
+			<a class="easyui-linkbutton" onclick="alert($('#cb').val());alert(ss);">测试获取批量参数</a>
+			<a class="easyui-linkbutton" onclick="getSelections()">显示多行数据</a>
+			
+		</div>
+		
+		
+<!--
+	作者：tim5wang@qq.com
+	时间：2016-12-09
+	描述： 编辑单个用户信息，当选中单个用户并点编辑时显示
+	TODO：未添加编辑结果存储      或返回到表格中功能
+-->
+		<div title="编辑单个信息" id="epanel" style="width: 300px;height: 240px;">
+			<div align="center" style="margin-top: 30px;">
+				<form id="userForm">
+					<table >
+						<tr>
+							<td>
+								用户名：
+							</td>
+							<td>
+								<input id="username" type="text" class="easyui-textbox"/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								年龄：
+							</td>
+							<td>
+								<input id="age" type="number" class="easyui-numberbox"/>
+							</td>
+						</tr>
+						<tr>
+							<td>
+								入学时间：
+							</td>
+							<td>
+								<input id="schoolin" type="text" class="easyui-datebox textbox" />
+							</td>
+						</tr>
+						<tr>
+							<td>
+								邮箱：
+							</td>
+							<td>
+								<input id="email" type="email" class="easyui-textbox"/>
+							</td>
+						</tr>
+						<tr>
+							<td colspan="2" align="center">
+								<div >
+									<a class="easyui-linkbutton" onclick="alert('未保存')" data-options="iconCls:'icon-ok'">保存</a>&nbsp;&nbsp;
+									<a class="easyui-linkbutton" onclick="alert('已经取消')" data-options="iconCls:'icon-cancel'">取消</a>
+								</div>
+							</td>
+						</tr>
+					</table>
+				</form>
+			</div>
+		</div>
+		
+<!--
+	作者：tim5wang@qq.com
+	时间：2016-12-09
+	描述：编辑多个用户信息，要编辑的用户来自于批量选择的对象
+-->		
+		<div   id="espanel">
+			<table id="ta2" class="easyui-datagrid" width="600px" data-options = "onClickRow:onClickRow,data:data">
+				<thead>
+					<tr>
+						<th data-options="field:'username',editor:{type:'textbox'}" width="100" >用户名</th>
+						<th data-options="field:'age',editor:{type:'textbox'}" width="100">年龄</th>
+						<th data-options="field:'schoolin',editor:{type:'textbox'}" width="100">入学时间</th>
+						<th data-options="field:'email',editor:{type:'textbox'}" width="100">邮箱</th>
+					</tr>
+				</thead>
+			</table>
+			<div align="center">
+				<a class="easyui-linkbutton" data-options="iconCls:'icon-save'">保存更改</a>
+				<a class="easyui-linkbutton" data-options="iconCls:'icon-cancel'">取消更改</a>
+			</div>
+		</div>
+		
+	</body>
+	
+	
+</html>
