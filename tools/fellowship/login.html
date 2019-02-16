@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>登陆联谊助手</title>
+    <link
+      href="https://cdn.bootcss.com/twitter-bootstrap/4.2.1/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/vue/2.6.3/vue.min.js"></script>
+    <script src="https://cdn.bootcss.com/uiv/0.29.0/uiv.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"
+    />
+
+    <script src="https://cdn.bootcss.com/element-ui/2.5.4/index.js"></script>
+    <script src="https://cdn.bootcss.com/element-ui/2.5.4/locale/zh-CN.min.js"></script>
+    <script src="js/config.js"></script>
+    <link rel="stylesheet" href="css/util.css" />
+    <script src="../../js/util.js"></script>
+  </head>
+  <body>
+    <div id="app" style="text-align:center;">
+      <el-col :sm="{span:12,offset:6}">
+        <h1>联谊系统管理员登陆</h1>
+        <hr />
+        <template v-if="status">
+          登陆成功，您好{{ username }},<a @click="logout" href="javascript:0;"
+            >登出</a
+          >
+          正在<a href="admin.html">跳转</a> ...{{ secondes }}秒
+        </template>
+        <template v-else>
+          <el-form ref="form" :model="form" label-width="80px">
+            <el-form-item label="用户名">
+              <el-input v-model="form.username"></el-input>
+            </el-form-item>
+            <el-form-item label="密码">
+              <el-input type="password" v-model="form.password"></el-input>
+            </el-form-item>
+
+            <el-form-item>
+              <el-button type="primary" @click="onSubmit">登陆</el-button>
+              <el-button>取消</el-button>
+            </el-form-item>
+          </el-form>
+        </template>
+      </el-col>
+    </div>
+  </body>
+  <script>
+    var app = new Vue({
+      el: "#app",
+      data: {
+        username: "",
+        status: false,
+        form: {
+          username: "",
+          password: ""
+        },
+        secondes: 3
+      },
+      created: function() {
+        $.post(
+          api_host,
+          {
+            s: "App.User.Heart",
+            token: $.ai.get("auth", "token")
+          },
+          function(res) {
+            if (res.ret == 200) {
+              (app.$data.status = true),
+                (app.$data.username = res.data.username);
+              $.ai.set("auth", "token", res.data.token);
+              app.jumping();
+            } else {
+              (app.$data.status = false), (app.$data.username = "");
+            }
+          }
+        );
+      },
+      methods: {
+        onSubmit: function() {
+          this.form.s = "App.User.Login";
+          $.post(api_host, this.form, function(res) {
+            if (res.ret == 200) {
+              (app.$data.status = true),
+                (app.$data.username = res.data.username);
+              $.ai.set("auth", "token", res.data.token);
+              $.ai.set("auth", "username", res.data.username);
+            } else {
+              app.$data.msg = "登陆失败";
+              app.$data.status = false;
+              app.$data.username = "";
+            }
+          });
+        },
+        logout: function() {
+          $.post(
+            api_host,
+            {
+              s: "App.User.Logout",
+              token: $.ai.get("auth", "token")
+            },
+            function(res) {
+              if (res.ret == 200) {
+                (app.$data.status = true),
+                  (app.$data.username = res.data.username);
+                $.ai.set("auth", "token", res.data.token);
+                window.location.reload();
+              } else {
+                (app.$data.status = false), (app.$data.username = "");
+              }
+            }
+          );
+        },
+        jumping: function() {
+          setTimeout(function() {
+            var seconds = --app.$data.secondes;
+            if (seconds < 1) {
+              window.location.href = "admin.html";
+            } else {
+              app.jumping();
+            }
+          }, 500);
+        }
+      }
+    });
+  </script>
+</html>
