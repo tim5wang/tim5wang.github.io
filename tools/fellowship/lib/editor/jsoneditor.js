@@ -3825,7 +3825,6 @@ function jsonArea(ob) {
   let insert = ob.insert;
   let nth = ob.nth;
   let change = ob.change;
-  console.log(ob);
   let thisare = new Object();
   if (!inputEle) {
     throw new Error("没有提供数据源.");

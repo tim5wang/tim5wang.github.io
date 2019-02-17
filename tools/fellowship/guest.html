@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>联谊助手</title>
+    <link
+      href="https://cdn.bootcss.com/twitter-bootstrap/4.2.1/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/vue/2.6.3/vue.min.js"></script>
+    <script src="https://cdn.bootcss.com/uiv/0.29.0/uiv.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"
+    />
+
+    <script src="https://cdn.bootcss.com/element-ui/2.5.4/index.js"></script>
+    <script src="https://cdn.bootcss.com/element-ui/2.5.4/locale/zh-CN.min.js"></script>
+    <link rel="stylesheet" href="css/util.css" />
+    <script src="../../js/util.js"></script>
+  </head>
+  <body>
+    <div id="app" style="text-align:center;">
+      <el-col :lg="{span:12,offset:6}">
+          <div>
+            <h3>
+              {{ title }}
+            </h3>
+          </div>
+          <div>
+            {{ desc }}
+          </div>
+          <hr>
+          <div v-if="time_limit!=false">剩余时间：{{ time_rest }}</div>
+          <hr>
+          <div v-for="(item,index) in questions" style="text-align: left;">
+            <div v-if="item.type=='single_chose'">
+              <div>
+                {{ index + 1 }}.
+                <span v-if="item.require" class="must">*</span>
+                {{ item.question }}(单选):
+              </div>
+              <el-radio-group v-model="item.answer">
+                <el-radio :label="inde" v-for="(ite,inde) in item.options">{{
+                  ite
+                }}</el-radio>
+              </el-radio-group>
+            </div>
+            <template v-if="item.type=='multi_chose'">
+              <div>
+                {{ index + 1 }}.
+                <span v-if="item.require" class="must">*</span>
+                {{ item.question }}(多选):
+              </div>
+              <el-checkbox-group v-model="item.answer">
+                <el-checkbox
+                  v-for="(ite,inde) in item.options"
+                  :label="inde"
+                  :key="inde"
+                  >{{ ite }}</el-checkbox
+                >
+              </el-checkbox-group>
+            </template>
+            <template v-if="item.type=='fill'">
+              <div>
+                {{ index + 1 }}.
+                <span v-if="item.require" class="must">*</span>
+                <template v-for="(ite,inde) in item.spans">
+                  <span v-if="(typeof(ite)=='string')">{{ ite }}</span>
+                  <span v-if="ite.type=='text'">
+                    <input type="text" v-model="ite.value" class="fill-line" />
+                  </span>
+                  <span v-if="ite.type=='number'">
+                    <input
+                      type="number"
+                      v-model="ite.value"
+                      class="fill-line"
+                    />
+                  </span>
+                  <span v-if="ite.type=='select'">
+                    <select v-model="ite.value" class="fill-line">
+                      <option
+                        :value="it"
+                        v-for="(it,ind) in ite.options"
+                        class="fill-line"
+                        >{{ it }}</option
+                      >
+                    </select>
+                  </span>
+                </template>
+              </div>
+            </template>
+            <template v-if="item.type=='answer'">
+              <div>
+                {{ index + 1 }}.
+                <span v-if="item.require" class="must">*</span>
+                {{ item.question }}(问答):
+              </div>
+              <div>
+                <el-input type="textarea" v-model="item.answer"></el-input>
+              </div>
+            </template>
+            <hr />
+          </div>
+          <el-button type="success" @click="submit" round>立即提交</el-button>
+        <el-footer> </el-footer>
+      </el-col>
+    </div>
+  </body>
+  <script src="js/config.js"></script>
+  <script src="js/main.js"></script>
+</html>

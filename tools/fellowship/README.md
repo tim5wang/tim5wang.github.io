@@ -1,6 +1,18 @@
 # 日志
 
+[fork me on tim5wang.github.io](tim5wang.github.io)
+
+[问卷预览](guest.html?job=job2)
+
 2019.2.17
+
+- admin.html
+- 完成了增加，预览，启用关闭
+- 改进行问卷提交
+
+---
+
+2019.2.16
 
 - index.html
 - admin.html

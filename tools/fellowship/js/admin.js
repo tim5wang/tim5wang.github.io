@@ -2,56 +2,106 @@
   app = new Vue({
     el: "#app",
     data: {
-      activeName: "first",
+      activeIndex: 1,
       username: "",
       holde: {},
       preview: {},
-      msg: ""
+      msg: "",
+      model_list: [],
+      tableData5: [
+        {
+          id: "12987122",
+          name: "好滋好味鸡蛋仔",
+          category: "江浙小吃、小吃零食",
+          desc: "荷兰优质淡奶，奶香浓而不腻",
+          address: "上海市普陀区真北路",
+          shop: "王小虎夫妻店",
+          shopId: "10333"
+        },
+        {
+          id: "12987123",
+          name: "好滋好味鸡蛋仔",
+          category: "江浙小吃、小吃零食",
+          desc: "荷兰优质淡奶，奶香浓而不腻",
+          address: "上海市普陀区真北路",
+          shop: "王小虎夫妻店",
+          shopId: "10333"
+        },
+        {
+          id: "12987125",
+          name: "好滋好味鸡蛋仔",
+          category: "江浙小吃、小吃零食",
+          desc: "荷兰优质淡奶，奶香浓而不腻",
+          address: "上海市普陀区真北路",
+          shop: "王小虎夫妻店",
+          shopId: "10333"
+        },
+        {
+          id: "12987126",
+          name: "好滋好味鸡蛋仔",
+          category: "江浙小吃、小吃零食",
+          desc: "荷兰优质淡奶，奶香浓而不腻",
+          address: "上海市普陀区真北路",
+          shop: "王小虎夫妻店",
+          shopId: "10333"
+        }
+      ]
     },
     watch: {
       holde: {
         handler() {
           this.preview = this.mountdata($.deepCopy(this.holde));
           console.log(this.preview);
-          this.preview.time_limit = new Date().TimeDistance(
-            Number(this.preview.time_limit) * 1000
-          );
+          if (this.preview.time_limit != false) {
+            this.preview.time_limit = new Date().TimeDistance(
+              Number(this.preview.time_limit) * 1000
+            );
+          }
         },
         deep: true
+      },
+      activeIndex() {
+        if (this.activeIndex == 1) {
+          this.init_1();
+        } else if (this.activeIndex == 2) {
+          this.init_2();
+        }
       }
     },
     created() {
-      this.username = $.ai.get("auth", "username");
-      $.post(
-        api_host,
-        {
-          token: $.ai.get("auth", "token"),
-          s: "App.Site.Model_model"
-        },
-        function(res) {
-          if (res.ret == 200) {
-            app.$data.holde = res.data;
-            app.$data.questions = JSON.stringify(res.data);
-            $("#qa").val(app.$data.questions);
-            new jsonArea({
-              el: "#qa",
-              insert: false,
-              change: function(json) {
-                console.log(json);
-                app.$data.holde = json;
-              }
-            });
-          }
-        }
-      );
-      $("#qa").change = function(val) {
-        console.log(val);
-      };
+      this.init_1();
+      this.activeIndex = $.ai.get("admin", "activeIndex");
     },
     methods: {
-      handleClick() {},
       handleSelect(key, path) {
-        console.log(key, path);
+        console.log(key);
+        $.ai.set("admin", "activeIndex", key);
+        this.activeIndex = key;
+      },
+      init_1() {
+        this.username = $.ai.get("auth", "username");
+        $.post(
+          api_host,
+          {
+            token: $.ai.get("auth", "token"),
+            s: "App.Site.Model_model"
+          },
+          function(res) {
+            if (res.ret == 200) {
+              app.$data.holde = res.data;
+              app.$data.questions = JSON.stringify(res.data);
+              $("#qa").val(app.$data.questions);
+              new jsonArea({
+                el: "#qa",
+                insert: false,
+                change: function(json) {
+                  console.log(json);
+                  app.$data.holde = json;
+                }
+              });
+            }
+          }
+        );
       },
       logout() {
         $.post(
@@ -136,8 +186,52 @@
         $.post(api_host, {
           token: $.ai.get("auth", "token"),
           s: "App.Site.Update_insert_model",
-          model: app.$data.questions
+          model: JSON.stringify(app.$data.holde)
         });
+      },
+      init_2() {
+        this.get_list();
+      },
+      get_list() {
+        $.post(
+          api_host,
+          {
+            token: $.ai.get("auth", "token"),
+            s: "App.Site.Get_all_model"
+          },
+          function(res) {
+            if (res.ret == 200) {
+              app.$data.model_list = res.data;
+              for (var i in app.$data.model_list) {
+                app.mountdata(app.$data.model_list[i]);
+              }
+            }
+          }
+        );
+      },
+      getUrl(job) {
+        return "guest.html?job=" + job;
+      },
+      edit(row) {},
+      delete(row) {},
+      active(row) {
+        let status = "未发布";
+        if (row.status == "未发布") {
+          status = "已发布";
+        }
+        $.post(
+          api_host,
+          {
+            token: $.ai.get("auth", "token"),
+            s: "App.Site.Update_insert_model",
+            model: JSON.stringify({ job: row.job, status: status })
+          },
+          function(res) {
+            if (res.ret == 200) {
+              app.init_2();
+            }
+          }
+        );
       }
     }
   });
