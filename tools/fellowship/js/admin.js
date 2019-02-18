@@ -1,4 +1,5 @@
 (function() {
+  const edit = $.getUrlParam("edit");
   app = new Vue({
     el: "#app",
     data: {
@@ -8,44 +9,7 @@
       preview: {},
       msg: "",
       model_list: [],
-      tableData5: [
-        {
-          id: "12987122",
-          name: "好滋好味鸡蛋仔",
-          category: "江浙小吃、小吃零食",
-          desc: "荷兰优质淡奶，奶香浓而不腻",
-          address: "上海市普陀区真北路",
-          shop: "王小虎夫妻店",
-          shopId: "10333"
-        },
-        {
-          id: "12987123",
-          name: "好滋好味鸡蛋仔",
-          category: "江浙小吃、小吃零食",
-          desc: "荷兰优质淡奶，奶香浓而不腻",
-          address: "上海市普陀区真北路",
-          shop: "王小虎夫妻店",
-          shopId: "10333"
-        },
-        {
-          id: "12987125",
-          name: "好滋好味鸡蛋仔",
-          category: "江浙小吃、小吃零食",
-          desc: "荷兰优质淡奶，奶香浓而不腻",
-          address: "上海市普陀区真北路",
-          shop: "王小虎夫妻店",
-          shopId: "10333"
-        },
-        {
-          id: "12987126",
-          name: "好滋好味鸡蛋仔",
-          category: "江浙小吃、小吃零食",
-          desc: "荷兰优质淡奶，奶香浓而不腻",
-          address: "上海市普陀区真北路",
-          shop: "王小虎夫妻店",
-          shopId: "10333"
-        }
-      ]
+      edit: false
     },
     watch: {
       holde: {
@@ -70,7 +34,7 @@
     },
     created() {
       this.init_1();
-      this.activeIndex = $.ai.get("admin", "activeIndex");
+      if (edit == null) this.activeIndex = $.ai.get("admin", "activeIndex");
     },
     methods: {
       handleSelect(key, path) {
@@ -80,11 +44,13 @@
       },
       init_1() {
         this.username = $.ai.get("auth", "username");
+        if (edit != null) this.edit = true;
         $.post(
           api_host,
           {
             token: $.ai.get("auth", "token"),
-            s: "App.Site.Model_model"
+            s: "App.Site.Model_model",
+            job: edit
           },
           function(res) {
             if (res.ret == 200) {
@@ -212,8 +178,24 @@
       getUrl(job) {
         return "guest.html?job=" + job;
       },
-      edit(row) {},
-      delete(row) {},
+      edit_model(row) {
+        window.location.href = "admin.html?edit=" + row.job;
+      },
+      delete_model(row) {
+        $.post(
+          api_host,
+          {
+            s: "App.Site.Delete_model",
+            token: $.ai.get("auth", "token"),
+            id: row.id
+          },
+          function(res) {
+            if (res.ret == 200) {
+              app.init_2();
+            }
+          }
+        );
+      },
       active(row) {
         let status = "未发布";
         if (row.status == "未发布") {

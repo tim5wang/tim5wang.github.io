@@ -33,7 +33,11 @@
         mode="horizontal"
         @select="handleSelect"
       >
-        <el-menu-item index="1">创建问卷</el-menu-item>
+        <el-menu-item
+          title="如果job存在则修改，如果job不存在则创建"
+          index="1"
+          >{{ edit ? "修改或创建问卷" : "创建问卷" }}</el-menu-item
+        >
         <el-menu-item index="2">查看问卷</el-menu-item>
         <el-menu-item index="30">问卷报表</el-menu-item>
         <div style="text-align:right;">
@@ -241,7 +245,10 @@
             <el-table-column label="标题" prop="title"> </el-table-column>
             <el-table-column fixed="right" label="操作" width="200">
               <template slot-scope="scope">
-                <el-button @click="edit(scope.row)" type="text" size="small"
+                <el-button
+                  @click="edit_model(scope.row)"
+                  type="text"
+                  size="small"
                   >编辑</el-button
                 >
                 <el-button
@@ -252,7 +259,10 @@
                     scope.row.status == "未发布" ? "发布" : "关闭"
                   }}</el-button
                 >
-                <el-button @click="delete(scope.row)" type="text" size="small"
+                <el-button
+                  @click="delete_model(scope.row)"
+                  type="text"
+                  size="small"
                   >删除</el-button
                 >
                 <a

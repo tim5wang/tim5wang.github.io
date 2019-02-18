@@ -5,10 +5,13 @@
     api_host,
     {
       job: job,
-      s: "App.Site.Get_table"
+      s: "App.Site.Get_table",
+      guest: $.ai.get("guest", "auth")
     },
     function(res) {
       if (res.ret == 200) {
+        $.ai.set("guest", "auth", res.data.guest);
+        res.data = res.data.data;
         res.data.time_rest = 0;
         for (var i in res.data.questions) {
           res.data.questions[i].answer = false;
@@ -77,7 +80,8 @@
                 {
                   job: job,
                   s: "App.Site.Submit_table",
-                  data: JSON.stringify(app.$data)
+                  data: JSON.stringify(app.$data),
+                  guest: $.ai.get("guest", "auth")
                 },
                 function(res) {
                   if (res.ret == 200) {
@@ -89,7 +93,7 @@
           created: function() {
             if (res.data.time_limit != false) {
               if ($.ai.get(res.data.job, "start_time") == undefined) {
-                let now = new Date().format("yyyy-MM-dd HH:mm:ss");
+                let now = new Date().Format("yyyy-MM-dd HH:mm:ss");
                 $.ai.set(res.data.job, "start_time", now);
                 console.log(now);
                 this.start_time = new Date(now);
