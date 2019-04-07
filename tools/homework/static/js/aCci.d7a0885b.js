@@ -1,0 +1,1 @@
+(window.webpackJsonp=window.webpackJsonp||[]).push([["aCci"],{aCci:function(t,e,i){"use strict";i.r(e);var l=i("KHd+"),n=Object(l.a)({},function(){var t=this.$createElement,e=this._self._c||t;return e("div",{staticStyle:{padding:"30px"}},[e("el-alert",{attrs:{closable:!1,title:"二级菜单"}})],1)},[],!1,null,null,null);n.options.__file="index.vue";e.default=n.exports}}]);
