@@ -1,8 +1,19 @@
-# 日志
+# 开发日志
 
 [fork me on tim5wang.github.io](tim5wang.github.io)
 
 [问卷预览](guest.html?job=job2)
+[编辑问卷](admin.html)
+[登录](login.html)
+
+2019.9.30
+1. 更改接口地址。
+2. 解决json编辑器重复渲染问题。
+3. 解决中文job名导致的url参数解析错误问题。
+4. [ ] 实现问卷报表
+5. [ ] 实现多用户
+
+---
 
 2019.2.18
 

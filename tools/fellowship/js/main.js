@@ -1,6 +1,6 @@
 (function() {
   const job = $.getUrlParam("job");
-
+  console.log(job)
   $.post(
     api_host,
     {
@@ -10,6 +10,7 @@
     },
     function(res) {
       if (res.ret == 200) {
+        console.log(res)
         $.ai.set("guest", "auth", res.data.guest);
         res.data = res.data.data;
         res.data.time_rest = 0;

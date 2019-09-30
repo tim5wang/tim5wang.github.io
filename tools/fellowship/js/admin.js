@@ -9,7 +9,8 @@
       preview: {},
       msg: "",
       model_list: [],
-      edit: false
+      edit: edit,
+      editer:{}
     },
     watch: {
       holde: {
@@ -29,12 +30,14 @@
           this.init_1();
         } else if (this.activeIndex == 2) {
           this.init_2();
+        }else if (this.activeIndex ==3){
+
         }
       }
     },
     created() {
-      this.init_1();
-      if (edit == null) this.activeIndex = $.ai.get("admin", "activeIndex");
+      if (edit == null) {this.activeIndex = $.ai.get("admin", "activeIndex");}
+      else{this.init_1();}
     },
     methods: {
       handleSelect(key, path) {
@@ -54,10 +57,12 @@
           },
           function(res) {
             if (res.ret == 200) {
+              this.editer = {}
               app.$data.holde = res.data;
               app.$data.questions = JSON.stringify(res.data);
               $("#qa").val(app.$data.questions);
-              new jsonArea({
+              console.log('初始化编辑器')
+              this.editer = new jsonArea({
                 el: "#qa",
                 insert: false,
                 change: function(json) {
@@ -153,6 +158,20 @@
           token: $.ai.get("auth", "token"),
           s: "App.Site.Update_insert_model",
           model: JSON.stringify(app.$data.holde)
+        },function(res){
+          var type = 'success'	
+          if(res.ret == 200){
+            app.init_2();
+          }else{
+            type = warning
+          }
+
+          app.$message({
+            showClose: true,
+            message: ''+res.msg,
+            center: true,
+            type: type
+          });
         });
       },
       init_2() {

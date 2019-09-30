@@ -1,11 +1,96 @@
+
+// 获取某个URL参数/参数列表
 (function($) {
   $.getUrlParam = function(name) {
-    var reg = new RegExp("(^|&)" + name + "=([^&]*)(&|$)");
-    var r = window.location.search.substr(1).match(reg);
-    if (r != null) return unescape(r[2]);
-    return null;
+    
+    // 获取全部参数，返回对象
+    var url =decodeURI(decodeURI(location.search)); //获取url中"?"符后的字串，使用了两次decodeRUI解码
+    var theRequest = new Object();
+    if (url.indexOf("?") != -1) {
+        var str = url.substr(1);
+        strs = str.split("&");
+        for (var i = 0; i < strs.length; i++) {
+            theRequest[strs[i].split("=")[0]] = unescape(strs[i].split("=")[1]);
+        }
+    }
+    console.log(theRequest)
+    if(name){ // 确切参数
+        return theRequest[name];
+    }else{
+        return theRequest;
+    }
+    
+    
   };
 })(jQuery);
+
+
+// URL编码,传入key,value
+(function($){
+    $.setUrlParam = function(params,value){
+        if(!params) return;
+        
+        var url = location.origin + location.pathname + "?";
+        if(value){ // 传入了一个参数
+            url += params + "="+ encodeURI(value)
+        }else{ // 传入了较多参数
+           if(typeof params != 'object') return;
+           var start = true;
+           for(const index in params){
+               if(start){
+                   url += index + "=" + encodeURI(params[index])
+                   start = false
+               }else{
+                   url += "&" +index + "=" + encodeURI(params[index])
+               }
+               
+           }
+           
+        }
+        return url;
+        //location.href = url;
+    };
+    
+    $.addUrlParam = function(params,value){
+        if(!params) return;
+        
+        var hasParam = location.search.indexOf('?')!= -1;
+        var url = location.href;
+        if(value){ // 传入了一个参数
+            if(hasParam){
+                url += "&" + params + "=" + encodeURI(value);
+            }else{
+                url += "?" + params + "=" + encodeURI(value);
+            }
+            
+        }else{ // 传入了较多参数
+            if(typeof params != 'object') return;
+            
+            
+            if(!hasParam){
+                url += "?";
+            }else{
+                url += "&";
+            }
+            
+            var start = true;
+            for(const index in params){
+               if(start){
+                   url += index + "=" + encodeURI(params[index])
+                   start = false
+               }else{
+                   url += "&" +index + "=" + encodeURI(params[index])
+               }
+            }
+        }
+        //location.href = url;
+        return url
+
+    }
+    
+    
+})(jQuery);
+
 
 // 日期格式化
 Date.prototype.Format = function(fmt) {
