@@ -1,2 +1,2 @@
-const api_host = "http://api.carc.top";
+const api_host = "https://api.carc.top";
 var app;
