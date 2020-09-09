@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <title>问卷系统</title>
+    <link
+      href="https://cdn.bootcss.com/twitter-bootstrap/4.2.1/css/bootstrap.min.css"
+      rel="stylesheet"
+    />
+    <script src="https://cdn.bootcss.com/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://cdn.bootcss.com/vue/2.6.3/vue.min.js"></script>
+    <script src="https://cdn.bootcss.com/uiv/0.29.0/uiv.min.js"></script>
+    <link
+      rel="stylesheet"
+      href="https://unpkg.com/element-ui/lib/theme-chalk/index.css"
+    />
+    <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+    <!-- <script src="https://cdn.bootcss.com/element-ui/2.5.4/index.js"></script> -->
+    <script src="https://cdn.bootcss.com/element-ui/2.5.4/locale/zh-CN.min.js"></script>
+    <link rel="stylesheet" href="lib/editor/jsoneditor.css" />
+    <script src="lib/editor/jsoneditor.js"></script>
+    <link rel="stylesheet" href="css/util.css" />
+    <script src="../../js/util.js"></script>
+  </head>
+
+  <body>
+    <div id="app">
+      <el-menu
+        :default-active="activeIndex"
+        class="el-menu-demo"
+        mode="horizontal"
+        @select="handleSelect"
+      >
+        <el-menu-item
+          title="如果job存在则修改，如果job不存在则创建"
+          index="1"
+          >{{ edit ? "修改或创建问卷" : "创建问卷" }}</el-menu-item
+        >
+        <el-menu-item index="2">查看问卷</el-menu-item>
+        <el-menu-item index="30">问卷报表</el-menu-item>
+        <div style="text-align:right;">
+          你好：{{ username }},<a @click="logout" href="javascript:0;">退出</a>
+        </div>
+      </el-menu>
+      <el-row type="flex" justify="center" v-if="activeIndex == 1">
+        <el-col :lg="12">
+          <input type="text" id="qa" value="{}" />
+          <div class="must">
+            {{ msg }}
+          </div>
+          <div style="text-align:center;margin-top: 20px;">
+            <el-button type="success" @click="add_model">保存</el-button>
+          </div>
+        </el-col>
+        <el-col :lg="12">
+          <div>
+            <h3>
+              {{ preview.title }}
+            </h3>
+          </div>
+          <div>
+            {{ preview.desc }}
+          </div>
+          <div v-if="preview.time_limit!=false" class="must">
+            剩余时间：{{ preview.time_limit }}
+          </div>
+          <div
+            v-for="(item,index) in preview.questions"
+            style="text-align: left;"
+          >
+            <div v-if="item.type=='single_chose'">
+              <div>
+                {{ index + 1 }}.
+                <span v-if="item.require" class="must">*</span>
+                {{ item.question }}(单选):
+              </div>
+              <el-radio-group v-model="item.answer">
+                <el-radio :label="inde" v-for="(ite,inde) in item.options">{{
+                  ite
+                }}</el-radio>
+              </el-radio-group>
+            </div>
+            <template v-if="item.type=='multi_chose'">
+              <div>
+                {{ index + 1 }}.
+                <span v-if="item.require" class="must">*</span>
+                {{ item.question }}(多选):
+              </div>
+              <el-checkbox-group v-model="item.answer">
+                <el-checkbox
+                  v-for="(ite,inde) in item.options"
+                  :label="inde"
+                  :key="inde"
+                  >{{ ite }}</el-checkbox
+                >
+              </el-checkbox-group>
+            </template>
+            <template v-if="item.type=='fill'">
+              <div>
+                {{ index + 1 }}.
+                <span v-if="item.require" class="must">*</span>
+                <template v-for="(ite,inde) in item.spans">
+                  <span v-if="(typeof(ite)=='string')">{{ ite }}</span>
+                  <span v-if="ite.type=='text'">
+                    <input type="text" v-model="ite.value" class="fill-line" />
+                  </span>
+                  <span v-if="ite.type=='number'">
+                    <input
+                      type="number"
+                      v-model="ite.value"
+                      class="fill-line"
+                    />
+                  </span>
+                  <span v-if="ite.type=='select'">
+                    <select v-model="ite.value" class="fill-line">
+                      <option
+                        :value="it"
+                        v-for="(it,ind) in ite.options"
+                        class="fill-line"
+                        >{{ it }}</option
+                      >
+                    </select>
+                  </span>
+                </template>
+              </div>
+            </template>
+            <template v-if="item.type=='answer'">
+              <div>
+                {{ index + 1 }}.
+                <span v-if="item.require" class="must">*</span>
+                {{ item.question }}(问答):
+              </div>
+              <div>
+                <el-input type="textarea" v-model="item.answer"></el-input>
+              </div>
+            </template>
+            <hr />
+          </div>
+        </el-col>
+      </el-row>
+
+      <el-row type="flex" justify="center" v-if="activeIndex == 2">
+        <template>
+          <el-table :data="model_list" style="width: 100%">
+            <el-table-column type="expand">
+              <template slot-scope="props">
+                <div>
+                  <h3>
+                    {{ props.row.title }}
+                  </h3>
+                </div>
+                <div>
+                  {{ props.row.desc }}
+                </div>
+                <div v-if="preview.time_limit!=false" class="must">
+                  剩余时间：{{ props.row.time_limit }}
+                </div>
+                <div
+                  v-for="(item,index) in preview.questions"
+                  style="text-align: left;"
+                >
+                  <div v-if="item.type=='single_chose'">
+                    <div>
+                      {{ index + 1 }}.
+                      <span v-if="item.require" class="must">*</span>
+                      {{ item.question }}(单选):
+                    </div>
+                    <el-radio-group v-model="item.answer">
+                      <el-radio
+                        :label="inde"
+                        v-for="(ite,inde) in item.options"
+                        >{{ ite }}</el-radio
+                      >
+                    </el-radio-group>
+                  </div>
+                  <template v-if="item.type=='multi_chose'">
+                    <div>
+                      {{ index + 1 }}.
+                      <span v-if="item.require" class="must">*</span>
+                      {{ item.question }}(多选):
+                    </div>
+                    <el-checkbox-group v-model="item.answer">
+                      <el-checkbox
+                        v-for="(ite,inde) in item.options"
+                        :label="inde"
+                        :key="inde"
+                        >{{ ite }}</el-checkbox
+                      >
+                    </el-checkbox-group>
+                  </template>
+                  <template v-if="item.type=='fill'">
+                    <div>
+                      {{ index + 1 }}.
+                      <span v-if="item.require" class="must">*</span>
+                      <template v-for="(ite,inde) in item.spans">
+                        <span v-if="(typeof(ite)=='string')">{{ ite }}</span>
+                        <span v-if="ite.type=='text'">
+                          <input
+                            type="text"
+                            v-model="ite.value"
+                            class="fill-line"
+                          />
+                        </span>
+                        <span v-if="ite.type=='number'">
+                          <input
+                            type="number"
+                            v-model="ite.value"
+                            class="fill-line"
+                          />
+                        </span>
+                        <span v-if="ite.type=='select'">
+                          <select v-model="ite.value" class="fill-line">
+                            <option
+                              :value="it"
+                              v-for="(it,ind) in ite.options"
+                              class="fill-line"
+                              >{{ it }}</option
+                            >
+                          </select>
+                        </span>
+                      </template>
+                    </div>
+                  </template>
+                  <template v-if="item.type=='answer'">
+                    <div>
+                      {{ index + 1 }}.
+                      <span v-if="item.require" class="must">*</span>
+                      {{ item.question }}(问答):
+                    </div>
+                    <div>
+                      <el-input
+                        type="textarea"
+                        v-model="item.answer"
+                      ></el-input>
+                    </div>
+                  </template>
+                  <hr />
+                </div>
+              </template>
+            </el-table-column>
+            <el-table-column label="job" prop="job"> </el-table-column>
+            <el-table-column label="状态" prop="status"> </el-table-column>
+            <el-table-column label="标题" prop="title"> </el-table-column>
+            <el-table-column fixed="right" label="操作" width="200">
+              <template slot-scope="scope">
+                <el-button
+                  @click="edit_model(scope.row)"
+                  type="text"
+                  size="small"
+                  >编辑</el-button
+                >
+                <el-button
+                  @click="active(scope.row)"
+                  type="text"
+                  size="small"
+                  >{{
+                    scope.row.status == "未发布" ? "发布" : "关闭"
+                  }}</el-button
+                >
+                <el-button
+                  @click="delete_model(scope.row)"
+                  type="text"
+                  size="small"
+                  >删除</el-button
+                >
+                <a
+                  v-if="scope.row.status =='已发布'"
+                  target="blank"
+                  :href="getUrl(scope.row.job)"
+                  >查看</a
+                >
+              </template>
+            </el-table-column>
+          </el-table>
+        </template>
+      </el-row>
+    </div>
+  </body>
+  <script src="js/config.js"></script>
+  <script src="js/admin.js"></script>
+  <style></style>
+</html>
