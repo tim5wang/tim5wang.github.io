@@ -1,8 +1,0 @@
-title: Tim5wang.GitHub.io
-description: personal homepage
-google_analytics: 
-show_downloads: true
-theme: jekyll-theme-architect
-
-gems:
-  - jekyll-mentions
