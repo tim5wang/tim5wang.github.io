@@ -80,9 +80,6 @@ pi 内置了多个实用的 Skill，包括：
 | Skill | 用途 |
 |-------|------|
 | `self-improving-agent` | 自我改进——从每次任务中学习，持续优化行为 |
-| `smc` | Shopee SMC 插件管理器的 CLI 操作 |
-| `smc-pam` | 通过 PAM 网关访问特权资源（SSH/MySQL/Redis/K8s） |
-| `smc-service` | 操作 Bromo/ECP 服务、任务、部署 |
 | `setup-remote-ssh-wrapper` | 配置 VSCode/Cursor 远程 SSH 连接 |
 
 ## Extension vs Skill
