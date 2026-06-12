@@ -1,0 +1,78 @@
+{{- /* Mermaid loader (client-side, CDN). Rendered on every page; cheap when no .mermaid blocks exist. */ -}}
+<script>
+  (function () {
+    if (typeof window === 'undefined') return;
+
+    function upgrade() {
+      var blocks = document.querySelectorAll('pre > code.language-mermaid');
+      blocks.forEach(function (code) {
+        var pre = code.parentElement;
+        if (!pre || pre.dataset.mermaidUpgraded === '1') return;
+        pre.dataset.mermaidUpgraded = '1';
+        var div = document.createElement('div');
+        div.className = 'mermaid';
+        div.textContent = code.textContent;
+        pre.replaceWith(div);
+      });
+    }
+
+    function currentTheme() {
+      var t = document.documentElement.getAttribute('data-theme');
+      if (t === 'dark' || t === 'light') return t;
+      try {
+        var stored = localStorage.getItem('pref-theme');
+        if (stored === 'dark' || stored === 'light') return stored;
+      } catch (e) {}
+      if (window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches) {
+        return 'dark';
+      }
+      return 'light';
+    }
+
+    function render() {
+      if (typeof window.mermaid === 'undefined') return;
+      var theme = currentTheme();
+      try {
+        window.mermaid.initialize({ startOnLoad: false, theme: theme, securityLevel: 'strict' });
+        window.mermaid.run({ querySelector: '.mermaid' });
+      } catch (err) {
+        console.error('mermaid render failed:', err);
+      }
+    }
+
+    function load() {
+      var s = document.createElement('script');
+      s.src = 'https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.min.js';
+      s.defer = true;
+      s.onload = function () { upgrade(); render(); };
+      document.head.appendChild(s);
+    }
+
+    function onReady() {
+      upgrade();
+      if (typeof window.mermaid !== 'undefined') {
+        render();
+      } else {
+        load();
+      }
+    }
+
+    if (document.readyState === 'loading') {
+      document.addEventListener('DOMContentLoaded', onReady);
+    } else {
+      onReady();
+    }
+
+    // Re-render when the user toggles light/dark.
+    document.addEventListener('themeChanged', function () { render(); });
+  })();
+</script>
+
+<style>
+  .mermaid {
+    display: block;
+    margin: 1.25rem auto;
+    text-align: center;
+    overflow-x: auto;
+  }
+</style>
